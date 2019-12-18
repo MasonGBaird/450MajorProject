@@ -1,0 +1,15 @@
+Create Countries Table:
+
+CREATE TABLE countries AS (SELECT Entity, Code FROM sa_safe)
+
+Create Users Table:
+
+CREATE TABLE Users (
+    Username VARCHAR (45) PRIMARY KEY,
+    Email varchar(45),
+    Phone bigint(10),
+    Stance char,
+    CHECK (Email LIKE '%@%'),
+    CHECK (Phone LIKE '^[0-9]*$'),
+    CHECK (Stance = '0' OR Stance = '1')
+);
