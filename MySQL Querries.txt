@@ -13,3 +13,22 @@ CREATE TABLE Users (
     CHECK (Phone LIKE '^[0-9]*$'),
     CHECK (Stance = '0' OR Stance = '1')
 );
+
+CREATE dummy_data view:
+
+CREATE VIEW `dummy_data` AS(
+SELECT `sas`.`Entity` AS `Entity`,
+((((`sas`.`(%)` / 10) + (`sai`.`(%)` / 10)) - ((`sdi`.`(%)` / 10) + (`sds`.`(%)` / 10))) - 10) AS `Approval Rating`,
+`sas`.`(%)` AS `SAsafe`,
+`sai`.`(%)` AS `SAimportant`,
+`sde`.`(%)` AS `SDeffective`
+FROM ((((`sa_safe` `sas` 
+LEFT JOIN `sa_imporantchild` `sai` 
+ON ((`sas`.`Entity` = `sai`.`Entity`)))
+LEFT JOIN `sd_importantchild2018` `sdi` 
+ON ((`sas`.`Entity` = `sdi`.`Entity`)))
+LEFT JOIN `sd_safe2018` `sds` 
+ON ((`sas`.`Entity` = `sds`.`Entity`))) 
+LEFT JOIN `sd_effective2018` `sde` 
+ON ((`sas`.`Entity` = `sde`.`Entity`)))
+ORDER BY ((((`sas`.`(%)` / 10) + (`sai`.`(%)` / 10)) - ((`sdi`.`(%)` / 10) + (`sds`.`(%)` / 10))) - 10) DESC)
